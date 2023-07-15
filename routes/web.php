@@ -1,8 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Foundation\Auth\EmailVerificationRequest;
-use Illuminate\Http\Request;
 
 
 /*
@@ -18,6 +17,7 @@ use Illuminate\Http\Request;
 
 // Auth::routes();
 Auth::routes(['verify' => true]);
+
 Route::middleware(['auth', 'verified'])->group(function (){    
     Route::get('/', [App\Http\Controllers\UserDashboardController::class, 'index']);
 
@@ -41,4 +41,12 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     
     //ROLES
     Route::get('roles', [App\Http\Controllers\RoleController::class, 'index']);
+
+    //CATEGORIES ROUTES
+    Route::get('categories', [App\Http\Controllers\CategoryController::class, 'index']);
+    Route::get('add-category', [App\Http\Controllers\CategoryController::class, 'create']);
+    Route::post('add-category', [App\Http\Controllers\CategoryController::class, 'store']);
+    Route::get('edit-category/{id}', [App\Http\Controllers\CategoryController::class, 'edit']);
+    Route::put('edit-category/{id}', [App\Http\Controllers\CategoryController::class, 'update']);
+    Route::get('delete-category/{id}', [App\Http\Controllers\CategoryController::class, 'destroy']);
 });
