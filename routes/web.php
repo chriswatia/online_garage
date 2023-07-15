@@ -49,4 +49,12 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     Route::get('edit-category/{id}', [App\Http\Controllers\CategoryController::class, 'edit']);
     Route::put('edit-category/{id}', [App\Http\Controllers\CategoryController::class, 'update']);
     Route::get('delete-category/{id}', [App\Http\Controllers\CategoryController::class, 'destroy']);
+
+    //BRANDS ROUTES
+    Route::get('brands', [App\Http\Controllers\BrandController::class, 'index']);
+    Route::get('add-brand', [App\Http\Controllers\BrandController::class, 'create']);
+    Route::post('add-brand', [App\Http\Controllers\BrandController::class, 'store']);
+    Route::get('edit-brand/{id}', [App\Http\Controllers\BrandController::class, 'edit']);
+    Route::put('edit-brand/{id}', [App\Http\Controllers\BrandController::class, 'update']);
+    Route::get('delete-brand/{id}', [App\Http\Controllers\BrandController::class, 'destroy']);
 });

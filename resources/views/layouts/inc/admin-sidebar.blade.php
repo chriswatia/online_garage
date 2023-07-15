@@ -8,12 +8,6 @@
         </div>
         <div class="sidebar-brand-text">{{ config('app.name', 'Laravel') }}</div>
     </a>
-
-    <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/') }}">
-            <i class="fas fa-fw fa-home"></i>
-            <span>Home</span></a>
-    </li>
     <!-- Divider -->
     <hr class="sidebar-divider my-0">
 
@@ -29,11 +23,16 @@
     <div class="sidebar-heading">
         Lists
     </div>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Mechanics</span></a>
+    </li>   
     <!-- Divider -->
-    <hr class="sidebar-divider">
+    <!-- <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Reports
-    </div>
+    </div> -->
     <!-- Divider -->
     @if (Auth::user()->role_id == 1)   
     
@@ -41,10 +40,20 @@
     <div class="sidebar-heading">
         Configurations
     </div>
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link" href="/admin/categories">
             <i class="fas fa-fw fa-list"></i>
             <span>Categories</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin/brands') }}">
+            <i class="fas fa-fw fa-car"></i>
+            <span>Brands</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin/products') }}">
+            <i class="fas fa-fw fa-cogs"></i>
+            <span>Products</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -53,12 +62,12 @@
     <div class="sidebar-heading">
         Accounts
     </div>
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link" href="/admin/users">
             <i class="fas fa-fw fa-list"></i>
             <span>Users</span></a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link" href="/admin/roles">
             <i class="fas fa-fw fa-list"></i>
             <span>Roles</span></a>
