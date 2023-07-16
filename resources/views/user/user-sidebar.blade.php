@@ -27,7 +27,7 @@
     <!-- Divider -->
     <hr class="sidebar-divider">
 
-    
+
     @auth
     <!-- Heading -->
     <div class="sidebar-heading">

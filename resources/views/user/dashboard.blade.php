@@ -1,6 +1,6 @@
 @extends('user.user')
 
-@section('title', 'Online Garage')
+@section('title', 'JATINGA GARAGE AND AUTOSPARES')
 
 @section('content')
 <div class="container-fluid">

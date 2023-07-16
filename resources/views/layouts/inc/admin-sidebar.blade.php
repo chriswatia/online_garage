@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/admin">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fas fa-cogs"></i>
         </div>
         <div class="sidebar-brand-text">{{ config('app.name', 'Laravel') }}</div>
     </a>
@@ -27,15 +27,15 @@
         <a class="nav-link" href="{{ url('/admin') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Mechanics</span></a>
-    </li>   
+    </li>
     <!-- Divider -->
     <!-- <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Reports
     </div> -->
     <!-- Divider -->
-    @if (Auth::user()->role_id == 1)   
-    
+    @if (Auth::user()->role_id == 1)
+
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
         Configurations
@@ -73,7 +73,7 @@
             <span>Roles</span></a>
     </li>
     @endif
-    @if (Auth::user()->role_id == 3)   
+    @if (Auth::user()->role_id == 3)
     <!-- Heading -->
     <div class="sidebar-heading">
         Account
