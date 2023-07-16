@@ -18,7 +18,9 @@ use Illuminate\Support\Facades\Route;
 // Auth::routes();
 Auth::routes(['verify' => true]);
 
-Route::middleware(['auth', 'verified'])->group(function (){    
+
+Route::middleware(['auth', 'verified'])->group(function (){
+    Route::get('/home', [App\Http\Controllers\UserDashboardController::class, 'index'])->name('home');
     Route::get('/', [App\Http\Controllers\UserDashboardController::class, 'index']);
 
     //Update profile
@@ -38,7 +40,7 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     Route::get('edit-user/{id}', [App\Http\Controllers\UserController::class, 'edit']);
     Route::put('edit-user/{id}', [App\Http\Controllers\UserController::class, 'update']);
     Route::get('delete-user/{id}', [App\Http\Controllers\UserController::class, 'destroy']);
-    
+
     //ROLES
     Route::get('roles', [App\Http\Controllers\RoleController::class, 'index']);
 
@@ -65,4 +67,12 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     Route::get('edit-product/{id}', [App\Http\Controllers\ProductController::class, 'edit']);
     Route::put('edit-product/{id}', [App\Http\Controllers\ProductController::class, 'update']);
     Route::get('delete-product/{id}', [App\Http\Controllers\ProductController::class, 'destroy']);
+
+    //MECHANICS ROUTES
+    Route::get('mechanics', [App\Http\Controllers\MechanicController::class, 'index']);
+    Route::get('add-mechanic', [App\Http\Controllers\MechanicController::class, 'create']);
+    Route::post('add-mechanic', [App\Http\Controllers\MechanicController::class, 'store']);
+    Route::get('edit-mechanic/{id}', [App\Http\Controllers\MechanicController::class, 'edit']);
+    Route::put('edit-mechanic/{id}', [App\Http\Controllers\MechanicController::class, 'update']);
+    Route::get('delete-mechanic/{id}', [App\Http\Controllers\MechanicController::class, 'destroy']);
 });

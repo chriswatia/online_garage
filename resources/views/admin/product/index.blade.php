@@ -45,8 +45,8 @@
                                 @if ($product->status == "1")
                                 <td style="color:green">Available</td>
                                 @else
-                                <td style="color:red">Not Available</td> 
-                                @endif                                
+                                <td style="color:red">Not Available</td>
+                                @endif
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-product/' . $product->id) }}">Edit</a> |
                                     <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-product/' . $product->id) }}">Delete</a>

@@ -4,7 +4,7 @@
     <!-- Sidebar - Brand -->
     <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
         <div class="sidebar-brand-icon rotate-n-15">
-            <i class="fas fa-laugh-wink"></i>
+            <i class="fas fa-cogs"></i>
         </div>
         <div class="sidebar-brand-text">{{ config('app.name', 'Laravel') }}</div>
     </a>

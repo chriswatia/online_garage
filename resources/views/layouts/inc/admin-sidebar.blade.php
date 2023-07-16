@@ -25,8 +25,18 @@
     </div>
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/admin') }}">
+            <i class="fas fa-fw fa-calendar"></i>
+            <span>Bookings</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin/mechanics') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Mechanics</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin') }}">
+            <i class="fas fa-fw fa-bookmark"></i>
+            <span>Orders</span></a>
     </li>
     <!-- Divider -->
     <!-- <hr class="sidebar-divider">
@@ -34,7 +44,7 @@
         Reports
     </div> -->
     <!-- Divider -->
-    @if (Auth::user()->role_id == 1)
+
 
     <hr class="sidebar-divider">
     <div class="sidebar-heading">
@@ -52,12 +62,12 @@
     </li>
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/admin/products') }}">
-            <i class="fas fa-fw fa-cogs"></i>
+            <i class="fas fa-fw fa-store-slash"></i>
             <span>Products</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
-
+    @if (Auth::user()->role_id == 1)
     <!-- Heading -->
     <div class="sidebar-heading">
         Accounts

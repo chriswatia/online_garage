@@ -38,7 +38,7 @@
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                 Low Stock</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count(App\Models\Product::where('quantity', '<=', 10)->get()) }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-list fa-2x text-gray-300"></i>
@@ -75,8 +75,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Total Revenue</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}</div>
+                                Total Products</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count(App\Models\Product::all()) }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-list fa-2x text-gray-300"></i>
