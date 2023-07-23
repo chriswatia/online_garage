@@ -83,4 +83,12 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     Route::get('edit-service/{id}', [App\Http\Controllers\ServiceController::class, 'edit']);
     Route::put('edit-service/{id}', [App\Http\Controllers\ServiceController::class, 'update']);
     Route::get('delete-service/{id}', [App\Http\Controllers\ServiceController::class, 'destroy']);
+
+    //ORDERS ROUTES
+    Route::get('orders', [App\Http\Controllers\OrderController::class, 'index']);
+    Route::get('add-order', [App\Http\Controllers\OrderController::class, 'create']);
+    Route::post('add-order', [App\Http\Controllers\OrderController::class, 'store']);
+    Route::get('edit-order/{id}', [App\Http\Controllers\OrderController::class, 'edit']);
+    Route::put('edit-order/{id}', [App\Http\Controllers\OrderController::class, 'update']);
+    Route::get('delete-order/{id}', [App\Http\Controllers\OrderController::class, 'destroy']);
 });

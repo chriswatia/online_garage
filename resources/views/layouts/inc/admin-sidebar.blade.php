@@ -34,7 +34,7 @@
             <span>Mechanics</span></a>
     </li>
     <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/admin') }}">
+        <a class="nav-link" href="{{ url('/admin/orders') }}">
             <i class="fas fa-fw fa-bookmark"></i>
             <span>Orders</span></a>
     </li>
