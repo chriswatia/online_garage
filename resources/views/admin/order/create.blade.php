@@ -20,58 +20,56 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Name</label>
-                            <input type="text" name="name" id="" class="form-control" required>
+                            <label for="">Order Number</label>
+                            <input type="number" name="order_number" value="{{ $order_number }}" class="form-control" required>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Image</label>
-                            <input type="file" name="image" id="" class="form-control">
+                            <label for="">Order Date</label>
+                            <input type="date" name="name" id="" class="form-control" required>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Brand</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                                name="brand_id">
-                                <option selected>Choose Brand</option>
-                                @foreach ($brands as $brand)
-                                    <option class="form-control" name="brand_id" value="{{ $brand->id }}">
-                                        {{ $brand->name }}
+                            <label for="">Customer Name</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="user_id" id="customerSelect" onchange="updatePhoneInput()">
+                                @foreach ($customers as $customer)
+                                    <option selected>Choose Customer</option>
+                                    <option class="form-control" name="user_id" value="{{ $customer->id }}">
+                                        {{ $customer->firstname.' '.$customer->lastname }}
                                     </option>
                                 @endforeach
                             </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Category</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                                name="category_id">
-                                <option selected>Choose category</option>
-                                @foreach ($categories as $category)
-                                    <option class="form-control" name="category_id" value="{{ $category->id }}">
-                                        {{ $category->name }}
-                                    </option>
-                                @endforeach
-                            </select>
+                            <label for="">Customer Phone No.</label>
+                            <input type="number" name="phone" id="customerPhone" value="" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Quantity</label>
-                            <input type="number" name="quantity" id="" class="form-control" required>
+                            <label for="">Mechanic Name</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="mechanic_id" >
+                                @foreach ($mechanics as $mechanic)
+                                    <option selected>Choose Mechanic</option>
+                                    <option class="form-control" name="mechanic" value="{{ $mechanic->id }}">
+                                        {{ $mechanic->firstname.' '.$mechanic->lastname }}
+                                    </option>
+                                @endforeach
+                            </select>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Rate(Kshs)</label>
-                            <input type="number" name="rate" id="" class="form-control" required>
+                            <label for="">Supervisor</label>
+                            <input type="text" name="supervisor" id="" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="">Status</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="status">
-                        <option value="1">Available</option>
-                        <option value="0">Not Available</option>
+                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="order_status">
+                            <option value="Pending">Pending</option>
+                            <option value="Paid">Paid</option>
+                            <option value="Closed">Closed</option>
                         </select>
                     </div>
                     <div class="row">
@@ -82,3 +80,25 @@
         </div>
     </div>
 @endsection
+
+<script>
+     // Create an object to store the customer data (id -> phone mapping)
+     const customerData = {
+        @foreach ($customers as $customer)
+            "{{ $customer->id }}": "{{ $customer->phone }}",
+        @endforeach
+    };
+
+    // Function to update the phone input field based on the selected customer
+    function updatePhoneInput() {
+        const customerSelect = document.getElementById('customerSelect');
+        const customerPhoneInput = document.getElementById('customerPhone');
+        const selectedCustomerId = customerSelect.value;
+        const selectedCustomerPhone = customerData[selectedCustomerId] || ''; // Get the phone number or an empty string if not found
+        customerPhoneInput.value = selectedCustomerPhone;
+    }
+
+    // Call the function initially to populate the phone input with the default value
+    // updatePhoneInput();
+</script>
+

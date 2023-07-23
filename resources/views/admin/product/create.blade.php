@@ -34,7 +34,6 @@
                             <label for="">Brand</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example"
                                 name="brand_id">
-                                <option selected>Choose Brand</option>
                                 @foreach ($brands as $brand)
                                     <option class="form-control" name="brand_id" value="{{ $brand->id }}">
                                         {{ $brand->name }}

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
@@ -15,7 +16,14 @@ class OrderController extends Controller
     }
 
     public function create(){
-        return view('admin.order.create');
+        $order_number = Order::max('order_number') + 1;
+        // Convert $order_number to a 4-digit string with leading zeros
+        $order_number = str_pad($order_number, 5, '0', STR_PAD_LEFT);
+
+        $customers = User::where('role_id', 2)->get();
+        $mechanics = User::where('role_id', 3)->get();
+
+        return view('admin.order.create', compact('order_number', 'customers', 'mechanics'));
     }
 
     public function store(OrderRequest $request)
