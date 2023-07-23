@@ -65,6 +65,12 @@
             <i class="fas fa-fw fa-store-slash"></i>
             <span>Products</span></a>
     </li>
+
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin/services') }}">
+            <i class="fas fa-fw fa-cog"></i>
+            <span>Services</span></a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
     @if (Auth::user()->role_id == 1)

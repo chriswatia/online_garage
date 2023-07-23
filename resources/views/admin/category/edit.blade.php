@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Edit Service Category')
+@section('title', 'Edit Product Category')
 
 @section('content')
     <div class="container-fluid px-4">
         <div class="card mt-4">
             <div class="card-header">
-                <h4 class="">Edit Service Category</h4>
+                <h4 class="">Edit Product Category</h4>
             </div>
             <div class="card-body">
                 @if ($errors->any())
@@ -29,7 +29,7 @@
                     </div>
                     <div class="mb-3">
                         <label for="">Status</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="status">                                    
+                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="status">
                         <option value="1" @if (old($category->status) == "1") {{ "selected" }} @endif>Available</option>
                         <option value="0" @if (old($category->status) == "0") {{ "selected" }} @endif>Not Available</option>
                         </select>

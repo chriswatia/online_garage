@@ -1,13 +1,13 @@
 @extends('layouts.master')
 
-@section('title', 'Service Category List')
+@section('title', 'Product Category List')
 
 @section('content')
     <div class="container-fluid px-4">
         <div class="card mt-4">
             <div class="card-header">
-                <h4 class="">Service Category List
-                    <a href="{{ url('admin/add-category') }}" class="btn btn-primary btn-sm float-end">Add Service Category
+                <h4 class="">Product Category List
+                    <a href="{{ url('admin/add-category') }}" class="btn btn-primary btn-sm float-end">Add Product Category
                         </a>
                 </h4>
             </div>
@@ -34,8 +34,8 @@
                                 @if ($category->status == "1")
                                 <td style="color:green">Available</td>
                                 @else
-                                <td style="color:red">Not Available</td> 
-                                @endif                                
+                                <td style="color:red">Not Available</td>
+                                @endif
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-category/' . $category->id) }}">Edit</a> |
                                     <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-category/' . $category->id) }}">Delete</a>

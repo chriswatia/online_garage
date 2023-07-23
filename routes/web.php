@@ -75,4 +75,12 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     Route::get('edit-mechanic/{id}', [App\Http\Controllers\MechanicController::class, 'edit']);
     Route::put('edit-mechanic/{id}', [App\Http\Controllers\MechanicController::class, 'update']);
     Route::get('delete-mechanic/{id}', [App\Http\Controllers\MechanicController::class, 'destroy']);
+
+    //SERVICES ROUTES
+    Route::get('services', [App\Http\Controllers\ServiceController::class, 'index']);
+    Route::get('add-service', [App\Http\Controllers\ServiceController::class, 'create']);
+    Route::post('add-service', [App\Http\Controllers\ServiceController::class, 'store']);
+    Route::get('edit-service/{id}', [App\Http\Controllers\ServiceController::class, 'edit']);
+    Route::put('edit-service/{id}', [App\Http\Controllers\ServiceController::class, 'update']);
+    Route::get('delete-service/{id}', [App\Http\Controllers\ServiceController::class, 'destroy']);
 });
