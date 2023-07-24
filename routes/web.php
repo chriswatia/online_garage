@@ -27,6 +27,14 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::get('profile/{id}', [App\Http\Controllers\UserController::class, 'editProfile']);
     Route::put('profile/{id}', [App\Http\Controllers\UserController::class, 'updateProfile']);
 
+    //VEHICLE ROUTES
+    Route::get('vehicles', [App\Http\Controllers\VehicleController::class, 'index']);
+    Route::get('add-vehicle', [App\Http\Controllers\VehicleController::class, 'create']);
+    Route::post('add-vehicle', [App\Http\Controllers\VehicleController::class, 'store']);
+    Route::get('edit-vehicle/{id}', [App\Http\Controllers\VehicleController::class, 'edit']);
+    Route::put('edit-vehicle/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
+    Route::get('delete-vehicle/{id}', [App\Http\Controllers\VehicleController::class, 'destroy']);
+
     Route::post('/sms', [App\Http\Controllers\SendSmsController::class, 'send']);
 
 });

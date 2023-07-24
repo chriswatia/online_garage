@@ -64,6 +64,23 @@
                         </div>
                     </div>
 
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="">Vehicle</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="mechanic_id" >
+                                @foreach ($mechanics as $mechanic)
+                                    <option class="form-control" name="mechanic" value="{{ $mechanic->id }}">
+                                        {{ $mechanic->firstname.' '.$mechanic->lastname }}
+                                    </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="">Supervisor</label>
+                            <input type="text" name="supervisor" id="" class="form-control" required>
+                        </div>
+                    </div>
+
                     <div class="mb-3">
                         <label for="">Status</label>
                         <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="order_status">

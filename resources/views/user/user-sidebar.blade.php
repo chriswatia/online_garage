@@ -23,17 +23,20 @@
     <div class="sidebar-heading">
         Actions
     </div>
-
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('vehicles') }}">
+            <i class="fas fa-fw fa-list"></i>
+            <span>Vehicles</span></a>
+    </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
-
 
     @auth
     <!-- Heading -->
     <div class="sidebar-heading">
         Account
     </div>
-    <li class="nav-item">
+    <li class="nav-item active">
         <a class="nav-link" href="{{ url('profile/'.Auth::user()->id) }}">
             <i class="fas fa-fw fa-list"></i>
             <span>Profile</span></a>
