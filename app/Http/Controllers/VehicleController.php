@@ -32,8 +32,9 @@ class VehicleController extends Controller
     }
 
     public function edit($id){
-        $Vehicle = Vehicle::findOrFail($id);
-        return view('user.vehicle.edit', compact('vehicle'));
+        $vehicle = Vehicle::findOrFail($id);
+        $brands = Brand::all();
+        return view('user.vehicle.edit', compact('vehicle', 'brands'));
     }
 
     public function update(Request $request, $id)
