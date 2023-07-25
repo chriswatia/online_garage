@@ -7,6 +7,9 @@ use App\Models\Order;
 use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
+use App\Models\OrderItem;
+use App\Models\Service;
+use App\Models\ServiceItem;
 use Illuminate\Support\Facades\Auth;
 
 class OrderController extends Controller
@@ -23,8 +26,9 @@ class OrderController extends Controller
 
         $customers = User::where('role_id', 2)->get();
         $mechanics = User::where('role_id', 3)->get();
+        $services = Service::all();
 
-        return view('admin.order.create', compact('order_number', 'customers', 'mechanics'));
+        return view('admin.order.create', compact('order_number', 'customers', 'mechanics', 'services'));
     }
 
     public function store(OrderRequest $request)
@@ -33,7 +37,18 @@ class OrderController extends Controller
 
         $order = new Order;
         $data['created_by'] = Auth::user()->id;
-        $order->create($data);
+        $order = $order->create($data);
+
+        $selected_services = explode(',', $data['selected_services']);
+        foreach($selected_services as $selected_service){
+            $service = Service::findOrFail($selected_service);
+            $service_item = new ServiceItem();
+            $service_item->order_id = $order->id;
+            $service_item->service_id = $service->id;
+            $service_item->rate = $service->rate;
+            $service_item->created_by = Auth::user()->id;
+            $service_item->save();
+        }
 
         return redirect('admin/orders')->with('message', "Order created successfully");
     }

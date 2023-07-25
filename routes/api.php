@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\SendSmsController;
 
@@ -20,6 +21,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/getCustomerVehicles/{id}', [App\Http\Controllers\UserController::class, 'getCustomerVehicles']);
+Route::get('/getVehicle/{id}', [App\Http\Controllers\UserController::class, 'getVehicle']);
 Route::post('/sms', [SendSmsController::class, 'send']);
 Route::post('/saveCountry', [SendSmsController::class, 'saveCountry']);
 

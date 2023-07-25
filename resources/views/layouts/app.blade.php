@@ -9,7 +9,7 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-   
+
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -82,6 +82,6 @@
         </main>
     </div>
      <!-- Scripts -->
-     <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
+     <script src="{{ asset('assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
     </body>
 </html>

@@ -35,10 +35,12 @@
                                 <td>{{ App\Models\User::where('id', $order->user_id)->first()->firstname }}</td>
                                 <td>{{ App\Models\User::where('id', $order->user_id)->first()->phone }}</td>
                                 <td>{{ $order->grand_total }}</td>
-                                @if ($order->order_status == "1")
-                                <td style="color:green">Available</td>
+                                @if ($order->order_status == "Pending")
+                                <td style="color:blue">Pending</td>
+                                @elseif ($order->order_status == "Paid")
+                                <td style="color:green">Paid</td>
                                 @else
-                                <td style="color:red">Not Available</td>
+                                <td style="color:red">Closed</td>
                                 @endif
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-order/' . $order->id) }}">Edit</a> |

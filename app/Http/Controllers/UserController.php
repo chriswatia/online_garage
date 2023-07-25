@@ -89,4 +89,9 @@ class UserController extends Controller
         $vehicles = Vehicle::join('brands', 'vehicles.brand_id', 'brands.id')->where('vehicles.created_by', $id)->get();
         return $vehicles;
     }
+
+    public function getVehicle($id){
+        $vehicles = Vehicle::join('brands', 'vehicles.brand_id', 'brands.id')->where('vehicles.id', $id)->get();
+        return $vehicles;
+    }
 }
