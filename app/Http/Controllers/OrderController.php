@@ -8,6 +8,7 @@ use App\Models\Vehicle;
 use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use App\Models\OrderItem;
+use App\Models\Product;
 use App\Models\Service;
 use App\Models\ServiceItem;
 use Illuminate\Support\Facades\Auth;
@@ -27,8 +28,9 @@ class OrderController extends Controller
         $customers = User::where('role_id', 2)->get();
         $mechanics = User::where('role_id', 3)->get();
         $services = Service::all();
+        $products = Product::all();
 
-        return view('admin.order.create', compact('order_number', 'customers', 'mechanics', 'services'));
+        return view('admin.order.create', compact('order_number', 'customers', 'mechanics', 'services', 'products'));
     }
 
     public function store(OrderRequest $request)

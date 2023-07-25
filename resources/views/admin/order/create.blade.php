@@ -70,23 +70,69 @@
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="vehicle_type" id="customerVehicle" onchange="updateRegNo()">
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-4 mb-3">
                             <label for="">Vehicle Registration Number</label>
                             <input type="text" name="registration_number" class="form-control" id="registration_number" readonly>
                         </div>
                     </div>
-                    <!-- Hidden input field to store the selected service IDs -->
-                    <input type="hidden" name="selected_services" id="selectedServices">
-                    <div class="card-header">
-                        <h4 class="">Services Done
-                            <a href="#" onclick="addRow()" class="btn btn-primary btn-sm float-end">Add Service
-                                </a>
-                        </h4>
-                    </div>
-                    <div class="card-body" id="servicesContainer">
-                        <!-- The services rows will be dynamically added here -->
-                    </div>
                     <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mt-4">
+                                <!-- Hidden input field to store the selected service IDs -->
+                                <input type="hidden" name="selected_services" id="selectedServices">
+                                <div class="card-header">
+                                    <h4 class="">Services Done
+                                        <a href="#" onclick="addRow()" class="btn btn-primary btn-sm float-end">Add Service
+                                            </a>
+                                    </h4>
+                                </div>
+                                <div class="card-body" id="servicesContainer">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Service</th>
+                                                <th>Service Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- The services rows will be dynamically added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mt-4">
+                                <!-- Hidden input field to store the selected service IDs -->
+                                <input type="hidden" name="selected_products" id="selectedProducts">
+                                <div class="card-header">
+                                    <h4 class="">Products Used
+                                        <a href="#" onclick="addProduct()" class="btn btn-primary btn-sm float-end">Add Product
+                                            </a>
+                                    </h4>
+                                </div>
+                                <div class="card-body" id="productsContainer">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Rate/Price</th>
+                                                <th>Available</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- The services rows will be dynamically added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mt-4">
                         <div class="col-md-6 mb-3">
                             <label for="">Sub Total</label>
                             <input type="number" name="sub_total" value="0" class="form-control" readonly>
@@ -150,18 +196,18 @@
         const rowId = Date.now(); // Unique identifier for each row
         const newRowHtml = `
         <div class="row" id="row-${rowId}">
-            <div class="col-md-4 mt-2">
-                <select class="form-select" name="service_id[]" onchange="updatePrice(${rowId})">
+            <div class="col-md-6 mt-2">
+                <select class="form-select" name="service_id[]" onchange="updatePrice(${rowId})" id="serviceSelect-${rowId}">
                     <option selected>Choose Service</option>
                     @foreach ($services as $service)
                         <option value="{{ $service->id }}">{{ $service->service }}</option>
                     @endforeach
                 </select>
             </div>
-            <div class="col-md-4 mt-2">
+            <div class="col-md-3 mt-2">
                 <input type="number" class="form-control" name="service_price[]" readonly id="servicePrice-${rowId}">
             </div>
-            <div class="col-md-4 mt-2">
+            <div class="col-md-1 mt-2">
                 <button class="btn btn-danger" onclick="removeRow(${rowId})">Remove</button>
             </div>
         </div>
@@ -182,6 +228,53 @@
         const row = document.getElementById(`row-${rowId}`);
         row.remove();
     }
+
+    function addProduct() {
+        const servicesContainer = document.getElementById('productsContainer');
+        const rowId = Date.now(); // Unique identifier for each row
+        const newRowHtml = `
+        <div class="row" id="row-${rowId}">
+            <div class="col-md-3 mt-2">
+                <select class="form-select" name="product_id[]" onchange="updateProductPrice(${rowId})">
+                    <option selected>Choose Product</option>
+                    @foreach ($products as $product)
+                        <option value="{{ $product->id }}">{{ $product->name }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-2 mt-2">
+                <input type="number" class="form-control" placeholder="Rate" name="product_price[]" readonly id="productPrice-${rowId}">
+            </div>
+            <div class="col-md-2 mt-2">
+                <input type="number" class="form-control" placeholder="Available" name="product_available_quantity[]" readonly id="productQuantity-${rowId}">
+            </div>
+            <div class="col-md-2 mt-2">
+                <input type="number" class="form-control" placeholder="Quantity" name="product_request_quantity[]" place id="productQuantity-${rowId}">
+            </div>
+            <div class="col-md-2 mt-2">
+                <input type="number" class="form-control" placeholder="Total Amount" name="total_amount[]" place id="productTotalAmount-${rowId}">
+            </div>
+            <div class="col-md-1 mt-2">
+                <button class="btn btn-danger" onclick="removeProductRow(${rowId})">Remove</button>
+            </div>
+        </div>
+        `;
+
+        // Create a new element and add it to the productsContainer
+        const newRow = document.createElement('div');
+        newRow.innerHTML = newRowHtml;
+        productsContainer.appendChild(newRow);
+
+        // Attach the updateSelectedProducts function to the onchange event of product selects
+        const productSelect = newRow.querySelector('select[name="product_id[]"]');
+        productSelect.addEventListener('change', updateSelectedProducts);
+    }
+
+    function removeProductRow(rowId) {
+        const row = document.getElementById(`row-${rowId}`);
+        row.remove();
+    }
+
      // Create an object to store the customer data (id -> phone mapping)
      const customerData = {
         @foreach ($customers as $customer)
@@ -284,6 +377,48 @@
     const serviceSelects = document.querySelectorAll('select[name="service_id[]"]');
     serviceSelects.forEach(select => {
         select.addEventListener('change', updateSelectedServices);
+    });
+
+    const productData = {
+    @foreach ($products as $product)
+        "{{ $product->id }}": "{{ $product->rate }}",
+        @endforeach
+    };
+
+    function updateProductPrice(rowId) {
+        const productSelect = document.querySelector(`#row-${rowId} select`);
+        const productPriceInput = document.querySelector(`#row-${rowId} input`);
+
+        const selectedProductId = productSelect.value;
+        const selectedProductPrice = productData[selectedProductId] || 0;
+        productPriceInput.value = selectedProductPrice;
+    }
+
+    // Function to update the hidden input field with selected service IDs
+    function updateSelectedProducts() {
+        const productSelects = document.querySelectorAll('select[name="service_id[]"]');
+        const productPrices = document.querySelectorAll('input[name="service_price[]"]');
+        const selectedProducts = [];
+
+        for (let i = 0; i < productSelects.length; i++) {
+            const select = productSelects[i];
+            const priceInput = productPrices[i];
+            const productId = select.value;
+            const productPrice = priceInput.value;
+
+            if (productPrice !== '') {
+                selectedProducts.push(productId);
+            }
+        }
+
+        const hiddenInput = document.getElementById('selectedProducts');
+        hiddenInput.value = selectedProducts.join(',');
+    }
+
+    // Attach the updateSelectedProducts function to the onchange event of service selects
+    const productSelects = document.querySelectorAll('select[name="product_id[]"]');
+    productSelects.forEach(select => {
+        select.addEventListener('change', updateSelectedProducts);
     });
 
 
