@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Role;
 use App\Models\User;
 use App\Models\Country;
+use App\Models\Vehicle;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -57,7 +58,7 @@ class UserController extends Controller
         else{
             return redirect('/admin')->with('message', "User updated successfully");
         }
-        
+
     }
 
     public function updateProfile(Request $request, $id)
@@ -82,5 +83,10 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         $user->delete();
         return redirect('admin/users')->with('message', "User deleted successfully");
+    }
+
+    public function getCustomerVehicles($id){
+        $vehicles = Vehicle::join('brands', 'vehicles.brand_id', 'brands.id')->where('vehicles.created_by', $id)->get();
+        return $vehicles;
     }
 }

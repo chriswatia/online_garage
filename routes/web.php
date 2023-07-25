@@ -26,6 +26,7 @@ Route::middleware(['auth', 'verified'])->group(function (){
     //Update profile
     Route::get('profile/{id}', [App\Http\Controllers\UserController::class, 'editProfile']);
     Route::put('profile/{id}', [App\Http\Controllers\UserController::class, 'updateProfile']);
+    Route::get('getCustomerVehicles/{id}', [App\Http\Controllers\UserController::class, 'getCustomerVehicles']);
 
     //VEHICLE ROUTES
     Route::get('vehicles', [App\Http\Controllers\VehicleController::class, 'index']);

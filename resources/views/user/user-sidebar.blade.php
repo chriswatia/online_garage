@@ -25,8 +25,18 @@
     </div>
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('vehicles') }}">
-            <i class="fas fa-fw fa-list"></i>
+            <i class="fas fa-fw fa-car"></i>
             <span>Vehicles</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('bookings') }}">
+            <i class="fas fa-fw fa-calendar"></i>
+            <span>Schedule Service</span></a>
+    </li>
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('invoices') }}">
+            <i class="fas fa-fw fa-file-invoice-dollar"></i>
+            <span>My Invoices</span></a>
     </li>
     <!-- Divider -->
     <hr class="sidebar-divider">
@@ -38,7 +48,7 @@
     </div>
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('profile/'.Auth::user()->id) }}">
-            <i class="fas fa-fw fa-list"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>
     </li>
     @endauth

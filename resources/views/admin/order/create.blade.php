@@ -31,7 +31,7 @@
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="">Customer Name</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="user_id" id="customerSelect" onchange="updatePhoneInput()">
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="user_id" id="customerSelect" onchange="updateInputs()">
                                 @foreach ($customers as $customer)
                                     <option selected>Choose Customer</option>
                                     <option class="form-control" name="user_id" value="{{ $customer->id }}">
@@ -66,19 +66,15 @@
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Vehicle</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="mechanic_id" >
-                                @foreach ($mechanics as $mechanic)
-                                    <option class="form-control" name="mechanic" value="{{ $mechanic->id }}">
-                                        {{ $mechanic->firstname.' '.$mechanic->lastname }}
-                                    </option>
-                                @endforeach
+                            <label for="">Customer Vehicle</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="vehicle_id" id="customerVehicle">
+                                <!-- Your options will be dynamically added here -->
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
+                        {{-- <div class="col-md-6 mb-3">
                             <label for="">Supervisor</label>
                             <input type="text" name="supervisor" id="" class="form-control" required>
-                        </div>
+                        </div> --}}
                     </div>
 
                     <div class="mb-3">
@@ -107,15 +103,41 @@
     };
 
     // Function to update the phone input field based on the selected customer
-    function updatePhoneInput() {
+    function updateInputs() {
         const customerSelect = document.getElementById('customerSelect');
         const customerPhoneInput = document.getElementById('customerPhone');
         const selectedCustomerId = customerSelect.value;
         const selectedCustomerPhone = customerData[selectedCustomerId] || ''; // Get the phone number or an empty string if not found
         customerPhoneInput.value = selectedCustomerPhone;
+
+        const customerVehicleSelect = document.getElementById("customerVehicle");
+        const selectedUserId = customerSelect.value;
+
+        // Clear previous options
+        customerVehicleSelect.innerHTML = "";
+
+        // Add a default "Choose Vehicle" option
+        const defaultOption = document.createElement("option");
+        defaultOption.text = "Choose Vehicle";
+        customerVehicleSelect.appendChild(defaultOption);
+
+        // Fetch the customer vehicles using AJAX
+        fetch(`/api/getCustomerVehicles/${selectedUserId}`)
+            .then(response => response.json())
+            .then(data => {
+                // Populate the customer vehicle options
+                console.log(data);
+                data.forEach(vehicle => {
+                    const option = document.createElement("option");
+                    option.value = vehicle.id;
+                    option.text = `${vehicle.name} ${vehicle.model}`;
+                    customerVehicleSelect.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error("Error fetching customer vehicles:", error);
+            });
     }
 
-    // Call the function initially to populate the phone input with the default value
-    // updatePhoneInput();
 </script>
 

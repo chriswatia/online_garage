@@ -18,8 +18,8 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                Total Services</div>
-                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}</div>
+                                Total Vehicles</div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count(App\Models\Vehicle::where('created_by', Auth::user()->id)->get())  }}</div>
                         </div>
                         <div class="col-auto">
                             <i class="fas fa-list fa-2x text-gray-300"></i>
@@ -35,7 +35,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                Expenditure</div>
+                                Services Done</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0  }}</div>
                         </div>
                         <div class="col-auto">
@@ -52,7 +52,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                Savings</div>
+                                Bookings</div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ 0 }}</div>
                         </div>
                         <div class="col-auto">

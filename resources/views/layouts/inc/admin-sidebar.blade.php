@@ -80,7 +80,7 @@
     </div>
     <li class="nav-item active">
         <a class="nav-link" href="/admin/users">
-            <i class="fas fa-fw fa-list"></i>
+            <i class="fas fa-fw fa-users"></i>
             <span>Users</span></a>
     </li>
     <li class="nav-item active">
@@ -96,7 +96,7 @@
     </div>
     <li class="nav-item">
         <a class="nav-link" href="{{ url('/admin/edit-user/'.Auth::user()->id) }}">
-            <i class="fas fa-fw fa-list"></i>
+            <i class="fas fa-fw fa-user"></i>
             <span>Profile</span></a>
     </li>
     @endif

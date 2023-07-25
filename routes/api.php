@@ -19,6 +19,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/getCustomerVehicles/{id}', [App\Http\Controllers\UserController::class, 'getCustomerVehicles']);
 Route::post('/sms', [SendSmsController::class, 'send']);
 Route::post('/saveCountry', [SendSmsController::class, 'saveCountry']);
 
