@@ -58,11 +58,11 @@
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/admin/brands') }}">
             <i class="fas fa-fw fa-car"></i>
-            <span>Brands</span></a>
+            <span>Car Brands</span></a>
     </li>
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/admin/products') }}">
-            <i class="fas fa-fw fa-store-slash"></i>
+            <i class="fas fa-fw fa-store"></i>
             <span>Products</span></a>
     </li>
 

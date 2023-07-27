@@ -57,7 +57,7 @@
                             </div>
                             <div class="row no-gutters align-items-center">
                                 <div class="col-auto">
-                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ 0 }}</div>
+                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800">{{ count(App\Models\Order::all()) }}</div>
                                 </div>
                             </div>
                         </div>
@@ -79,7 +79,7 @@
                             <div class="h5 mb-0 font-weight-bold text-gray-800">{{ count(App\Models\Product::all()) }}</div>
                         </div>
                         <div class="col-auto">
-                            <i class="fas fa-list fa-2x text-gray-300"></i>
+                            <i class="fas fa-store fa-2x text-gray-300"></i>
                         </div>
                     </div>
                 </div>
