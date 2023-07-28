@@ -36,6 +36,14 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::put('edit-vehicle/{id}', [App\Http\Controllers\VehicleController::class, 'update']);
     Route::get('delete-vehicle/{id}', [App\Http\Controllers\VehicleController::class, 'destroy']);
 
+    //BOOKINGS ROUTES
+    Route::get('bookings', [App\Http\Controllers\Bookingontroller::class, 'index']);
+    Route::get('add-booking', [App\Http\Controllers\Bookingontroller::class, 'create']);
+    Route::post('add-booking', [App\Http\Controllers\Bookingontroller::class, 'store']);
+    Route::get('edit-booking/{id}', [App\Http\Controllers\Bookingontroller::class, 'edit']);
+    Route::put('edit-booking/{id}', [App\Http\Controllers\Bookingontroller::class, 'update']);
+    Route::get('delete-booking/{id}', [App\Http\Controllers\Bookingontroller::class, 'destroy']);
+
     Route::post('/sms', [App\Http\Controllers\SendSmsController::class, 'send']);
 
 });

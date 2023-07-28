@@ -1,12 +1,12 @@
 @extends('user.user')
 
-@section('title', 'Book Service')
+@section('title', 'Add Vehicle')
 
 @section('content')
     <div class="container-fluid px-4">
         <div class="card mt-4">
             <div class="card-header">
-                <h4 class="">Book Service</h4>
+                <h4 class="">Add Vehicle</h4>
             </div>
             <div class="card-body">
                 @if ($errors->any())

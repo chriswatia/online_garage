@@ -1,6 +1,6 @@
 @extends('user.user')
 
-@section('title', 'Scheduled Services')
+@section('title', 'Vehicle List')
 
 @section('content')
     <div class="container-fluid px-4">
