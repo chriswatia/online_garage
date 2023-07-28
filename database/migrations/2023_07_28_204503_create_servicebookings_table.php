@@ -13,7 +13,7 @@ class CreateServicebookingsTable extends Migration
      */
     public function up()
     {
-        Schema::create('servicebookings', function (Blueprint $table) {
+        Schema::create('service_bookings', function (Blueprint $table) {
             $table->id();
             $table->integer('vehicle_id');
             $table->integer('service_id');
@@ -31,6 +31,6 @@ class CreateServicebookingsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('servicebookings');
+        Schema::dropIfExists('service_bookings');
     }
 }

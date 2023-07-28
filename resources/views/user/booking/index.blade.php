@@ -1,13 +1,13 @@
 @extends('user.user')
 
-@section('title', 'Vehicle List')
+@section('title', 'Scheduled Services')
 
 @section('content')
     <div class="container-fluid px-4">
         <div class="card mt-4">
             <div class="card-header">
-                <h4 class="">Vehicle List
-                    <a href="{{ url('add-vehicle') }}" class="btn btn-primary btn-sm float-end">Add Vehicle
+                <h4 class="">Scheduled Services
+                    <a href="{{ url('add-booking') }}" class="btn btn-primary btn-sm float-end">Schedule Service
                         </a>
                 </h4>
             </div>
@@ -18,34 +18,35 @@
                 <table class="table table-bordered">
                     <thead>
                         <tr>
-                            <th>ID</th>
-                            <th>Brand</th>
-                            <th>Model</th>
-                            <th>Year</th>
-                            <th>Color</th>
-                            <th>Registration Number</th>
+                            <th>Vehicle</th>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Notes</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($vehicles as $vehicle)
+                        @foreach ($bookings as $booking)
                             <tr>
-                                <td>{{ $vehicle->id }}</td>
-                                <td>{{ App\Models\Brand::where('id', $vehicle->brand_id)->first()->name }}</td>
-                                <td>{{ $vehicle->model }}</td>
-                                <td>{{ $vehicle->year }}</td>
-                                <td>{{ $vehicle->color }}</td>
-                                <td>{{ $vehicle->registration_number }}</td>
-                                @if ($vehicle->status == "1")
-                                <td style="color:green">Available</td>
+                                <td>{{ App\Models\Vehicle::where('id', $booking->vehicle_id)->first()->model }}</td>
+                                <td>{{ App\Models\Service::where('id', $booking->service_id)->first()->service }}</td>
+                                <td>{{ $booking->date }}</td>
+                                <td>{{ $booking->notes }}</td>
+
+                                @if ($vehicle->status == "Pending")
+                                <td style="color:grey">Pending</td>
+
+                                @elseif ($vehicle->status == "In Progress")
+                                <td style="color:blue">In Progress</td>
+
                                 @else
-                                <td style="color:red">Not Available</td>
+                                <td style="color:green">Done</td>
                                 @endif
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="{{ url('edit-vehicle/' . $vehicle->id) }}">Edit</a>
+                                    <a class="btn btn-primary btn-sm" href="{{ url('edit-booking/' . $booking->id) }}">Edit</a>
                                     {{-- | --}}
-                                    {{-- <a class="btn btn-danger btn-sm" href="{{ url('delete-vehicle/' . $vehicle->id) }}">Delete</a> --}}
+                                    {{-- <a class="btn btn-danger btn-sm" href="{{ url('delete-booking/' . $booking->id) }}">Delete</a> --}}
 
                                 </td>
 

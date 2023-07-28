@@ -13,7 +13,7 @@ class UpdateServicebookingsTable extends Migration
      */
     public function up()
     {
-        Schema::table('servicebookings', function (Blueprint $table) {
+        Schema::table('service_bookings', function (Blueprint $table) {
             $table->string('status')->nullable();
         });
     }
@@ -25,7 +25,7 @@ class UpdateServicebookingsTable extends Migration
      */
     public function down()
     {
-        Schema::table('servicebookings', function (Blueprint $table) {
+        Schema::table('service_bookings', function (Blueprint $table) {
             //
         });
     }
