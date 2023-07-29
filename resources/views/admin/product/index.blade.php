@@ -7,8 +7,10 @@
         <div class="card mt-4">
             <div class="card-header">
                 <h4 class="">Product List
+                    @if (Auth::user()->role_id == 1)
                     <a href="{{ url('admin/add-product') }}" class="btn btn-primary btn-sm float-end">Add Product
-                        </a>
+                    </a>
+                    @endif
                 </h4>
             </div>
             <div class="card-body">
@@ -26,7 +28,9 @@
                             <th>Quantity</th>
                             <th>Rate(Kshs)</th>
                             <th>Status</th>
+                            @if (Auth::user()->role_id == 1)
                             <th>Action</th>
+                            @endif
                         </tr>
                     </thead>
                     <tbody>
@@ -47,12 +51,13 @@
                                 @else
                                 <td style="color:red">Not Available</td>
                                 @endif
+                                @if (Auth::user()->role_id == 1)
                                 <td>
                                     <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-product/' . $product->id) }}">Edit</a> |
                                     <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-product/' . $product->id) }}">Delete</a>
 
                                 </td>
-
+                                @endif
                             </tr>
                         @endforeach
                     </tbody>

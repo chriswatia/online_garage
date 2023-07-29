@@ -15,6 +15,7 @@ class ServiceBooking extends Model
         'date',
         'created_by',
         'notes',
-        'status'
+        'status',
+        'mechanic_id'
     ];
 }

@@ -23,16 +23,27 @@
     <div class="sidebar-heading">
         Lists
     </div>
+    @if (Auth::user()->role_id == 1)
     <li class="nav-item active">
-        <a class="nav-link" href="{{ url('/admin') }}">
+        <a class="nav-link" href="{{ url('/admin/bookings') }}">
             <i class="fas fa-fw fa-calendar"></i>
             <span>Bookings</span></a>
     </li>
+    @endif
+    @if (Auth::user()->role_id == 3)
+    <li class="nav-item active">
+        <a class="nav-link" href="{{ url('/admin/my-bookings') }}">
+            <i class="fas fa-fw fa-calendar"></i>
+            <span>Bookings</span></a>
+    </li>
+    @endif
+    @if (Auth::user()->role_id == 1)
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/admin/mechanics') }}">
             <i class="fas fa-fw fa-users"></i>
             <span>Mechanics</span></a>
     </li>
+    @endif
     <li class="nav-item active">
         <a class="nav-link" href="{{ url('/admin/orders') }}">
             <i class="fas fa-fw fa-bookmark"></i>

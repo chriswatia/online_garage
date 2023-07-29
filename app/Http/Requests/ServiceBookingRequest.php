@@ -30,6 +30,7 @@ class ServiceBookingRequest extends FormRequest
             'date' => 'required',
             'status' => 'nullable',
             'created_by' => 'nullable',
+            'mechanic_id' => 'nullable'
         ];
 
         return $rules;

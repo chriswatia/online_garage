@@ -113,4 +113,14 @@ Route::prefix('admin')->middleware(['auth', 'IsAdmin', 'verified'])->group(funct
     Route::get('edit-order/{id}', [App\Http\Controllers\OrderController::class, 'edit']);
     Route::put('edit-order/{id}', [App\Http\Controllers\OrderController::class, 'update']);
     Route::get('delete-order/{id}', [App\Http\Controllers\OrderController::class, 'destroy']);
+
+    //BOOKINGS ROUTES
+    Route::get('bookings', [App\Http\Controllers\ServiceBookingController::class, 'bookings']);
+    Route::get('assign-mechanic/{id}', [App\Http\Controllers\ServiceBookingController::class, 'assignMechanic']);
+    Route::put('assignMechanic/{id}', [App\Http\Controllers\ServiceBookingController::class, 'updateMechanic']);
+    Route::get('close/{id}', [App\Http\Controllers\ServiceBookingController::class, 'close']);
+    Route::put('closeBooking/{id}', [App\Http\Controllers\ServiceBookingController::class, 'closeBooking']);
+    Route::get('view/{id}', [App\Http\Controllers\ServiceBookingController::class, 'view']);
+    Route::put('viewBooking/{id}', [App\Http\Controllers\ServiceBookingController::class, 'viewBooking']);
+    Route::get('my-bookings', [App\Http\Controllers\ServiceBookingController::class, 'myBookings']);
 });

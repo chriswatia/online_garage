@@ -42,7 +42,7 @@
                                 <td style="color:red">Closed</td>
                                 @endif
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-order/' . $order->id) }}">Pay</a>
+                                    <a class="btn btn-primary btn-sm" href="#">Pay</a>
 
                                 </td>
 
