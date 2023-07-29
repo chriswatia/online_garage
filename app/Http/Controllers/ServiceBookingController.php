@@ -17,7 +17,10 @@ class ServiceBookingController extends Controller
     }
 
     public function create(){
-        $vehicles = Vehicle::where('created_by', Auth::user()->id)->get();
+        $vehicles = Vehicle::join('brands', 'vehicles.brand_id', 'brands.id')
+        ->where('vehicles.created_by', Auth::user()->id)
+        ->select('vehicles.*', 'brands.name')
+        ->get();
         $services = Service::all();
         return view('user.booking.create', compact('vehicles', 'services'));
     }

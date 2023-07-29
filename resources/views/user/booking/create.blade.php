@@ -1,12 +1,12 @@
 @extends('user.user')
 
-@section('title', 'Add Vehicle')
+@section('title', 'Schedule Service')
 
 @section('content')
     <div class="container-fluid px-4">
         <div class="card mt-4">
             <div class="card-header">
-                <h4 class="">Add Vehicle</h4>
+                <h4 class="">Schedule Service</h4>
             </div>
             <div class="card-body">
                 @if ($errors->any())
@@ -20,12 +20,12 @@
                     @csrf
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Brand</label>
+                            <label for="">Vehicle</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-sm example"
-                                name="brand_id">
-                                @foreach ($brands as $brand)
-                                    <option class="form-control" name="brand_id" value="{{ $brand->id }}">
-                                        {{ $brand->name }}
+                                name="vehicle_id">
+                                @foreach ($vehicles as $vehicle)
+                                    <option class="form-control" name="vehicle_id" value="{{ $vehicle->id }}">
+                                        {{ $vehicle->name .' '.$vehicle->model .' - '.$vehicle->registration_number}}
                                     </option>
                                 @endforeach
                             </select>
@@ -65,15 +65,14 @@
                         <div class="col-md-6 mb-3">
                             <label for="">Status</label>
                             <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="status">
-                            <option value="1">Available</option>
-                            <option value="0">Not Available</option>
+                            <option value="Pending">Pending</option>
                             </select>
                         </div>
                     </div>
 
 
                     <div class="row">
-                        <button type="submit" class="btn btn-primary">Save</button>
+                        <button type="submit" class="btn btn-primary">Schedule</button>
                     </div>
                 </form>
             </div>
