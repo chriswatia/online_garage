@@ -28,7 +28,7 @@ class ServiceBookingRequest extends FormRequest
             'service_id' => 'required',
             'notes' => 'required',
             'date' => 'required',
-            'status' > 'nullable',
+            'status' => 'nullable',
             'created_by' => 'nullable',
         ];
 

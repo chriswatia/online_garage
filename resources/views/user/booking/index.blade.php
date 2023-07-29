@@ -29,15 +29,15 @@
                     <tbody>
                         @foreach ($bookings as $booking)
                             <tr>
-                                <td>{{ App\Models\Vehicle::where('id', $booking->vehicle_id)->first()->model }}</td>
+                                <td>{{ $booking->name .' '. $booking->model .' - '.$booking->registration_number }}</td>
                                 <td>{{ App\Models\Service::where('id', $booking->service_id)->first()->service }}</td>
                                 <td>{{ $booking->date }}</td>
                                 <td>{{ $booking->notes }}</td>
 
-                                @if ($vehicle->status == "Pending")
+                                @if ($booking->status == "Pending")
                                 <td style="color:grey">Pending</td>
 
-                                @elseif ($vehicle->status == "In Progress")
+                                @elseif ($booking->status == "In Progress")
                                 <td style="color:blue">In Progress</td>
 
                                 @else

@@ -77,4 +77,9 @@ class OrderController extends Controller
 
         return redirect('admin/orders')->with('message', "Order deleted successfully");
     }
+
+    public function invoices(){
+        $orders = Order::where('user_id', Auth::user()->id)->get();
+        return view('user.invoice.index', compact('orders'));
+    }
 }

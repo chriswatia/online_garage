@@ -12,7 +12,10 @@ use App\Http\Requests\ServiceBookingRequest;
 class ServiceBookingController extends Controller
 {
     public function index(){
-        $bookings = ServiceBooking::where('created_by', Auth::user()->id)->get();
+        $bookings = ServiceBooking::join('vehicles', 'service_bookings.vehicle_id', 'vehicles.id')
+        ->join('brands', 'vehicles.brand_id', 'brands.id')
+        ->where('service_bookings.created_by', Auth::user()->id)
+        ->select('service_bookings.*', 'vehicles.model', 'vehicles.registration_number', 'brands.name')->get();
         return view('user.booking.index', compact('bookings'));
     }
 
@@ -37,37 +40,29 @@ class ServiceBookingController extends Controller
     }
 
     public function edit($id){
-        $mechanic = Mechanic::findOrFail($id);
-        $mechanics = User::all();
-        return view('admin.mechanic.edit', compact('mechanics', 'mechanic'));
+        $vehicles = Vehicle::join('brands', 'vehicles.brand_id', 'brands.id')
+        ->where('vehicles.created_by', Auth::user()->id)
+        ->select('vehicles.*', 'brands.name')
+        ->get();
+        $services = Service::all();
+        $booking = ServiceBooking::findOrFail($id);
+        return view('user.booking.edit', compact('booking', 'vehicles', 'services'));
     }
 
     public function update(Request $request, $id)
     {
         $data = $request->all();
-        $mechanic = Mechanic::findOrFail($id);
-        $mechanic->update($data);
+        $servicebooking = ServiceBooking::findOrFail($id);
+        $servicebooking->update($data);
 
-
-        //Update User to set Mechanic role
-        $user = User::findOrFail($mechanic->user_id);
-        $user->role_id = 3;
-        $user->update();
-
-        return redirect('admin/mechanics')->with('message', "Mechanic updated successfully");
+        return redirect('bookings')->with('message', "Service updated successfully");
     }
 
     public function destroy($id)
     {
-        $mechanic = Mechanic::findOrFail($id);
+        $servicebooking = ServiceBooking::findOrFail($id);
 
-
-        //Update User to set Customer role
-        $user = User::findOrFail($mechanic->user_id);
-        $user->role_id = 2;
-        $user->update();
-
-        $mechanic->delete();
-        return redirect('admin/mechanics')->with('message', "Mechanic deleted successfully");
+        $servicebooking->delete();
+        return redirect('booking')->with('message', "Service deleted successfully");
     }
 }

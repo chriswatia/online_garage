@@ -44,7 +44,12 @@ Route::middleware(['auth', 'verified'])->group(function (){
     Route::put('edit-booking/{id}', [App\Http\Controllers\ServiceBookingController::class, 'update']);
     Route::get('delete-booking/{id}', [App\Http\Controllers\ServiceBookingController::class, 'destroy']);
 
+    //INVOICES ROUTES
+    Route::get('invoices', [App\Http\Controllers\OrderController::class, 'invoices']);
+
     Route::post('/sms', [App\Http\Controllers\SendSmsController::class, 'send']);
+
+
 
 });
 
