@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Service;
 use App\Models\Vehicle;
+use App\Models\Mechanic;
 use Illuminate\Http\Request;
 use App\Models\ServiceBooking;
 use Illuminate\Support\Facades\Auth;
+use App\Notifications\EmailNotification;
 use App\Http\Requests\ServiceBookingRequest;
-use App\Models\Mechanic;
 
 class ServiceBookingController extends Controller
 {
@@ -37,6 +39,21 @@ class ServiceBookingController extends Controller
         $servicebooking = new ServiceBooking;
         $data['created_by'] = Auth::user()->id;
         $servicebooking = $servicebooking->create($data);
+
+        $user = Auth::user();
+
+        $admin_user = User::where('role_id', 1)->first();
+
+        $project = [
+            'greeting' => 'Hi '.$admin_user->firstname.',',
+            'body' => 'A new service booking was scheduled for '.$servicebooking->date,
+            'thanks' => 'Thank you this is from '.$user->firstname .' '.$user->lastname,
+            'actionText' => 'View Booking',
+            'actionURL' => url('/admin/bookings'),
+            'id' => 57
+        ];
+
+        $admin_user->notify(new EmailNotification($project));
 
         return redirect('bookings')->with('message', "Service booked successfully");
     }
@@ -104,6 +121,23 @@ class ServiceBookingController extends Controller
         $servicebooking = ServiceBooking::findOrFail($id);
         $servicebooking->update($data);
 
+        $servicebooking = ServiceBooking::findOrFail($id);
+
+        $user = User::where('id', $servicebooking->mechannic_id)->first();
+
+        $admin_user = User::where('id', $servicebooking->created_by)->first();
+
+        $project = [
+            'greeting' => 'Hi '.$admin_user->firstname.',',
+            'body' => ''.$user->firstname .' '.$user->lastname.' was assigned the Mechanic',
+            'thanks' => 'Thanks for choosing Jatinga Garage and AutoSpares',
+            'actionText' => 'View Booking',
+            'actionURL' => url('edit-booking/'.$servicebooking->id),
+            'id' => 57
+        ];
+
+        $admin_user->notify(new EmailNotification($project));
+
         return redirect('admin/bookings')->with('message', "Mechanic assigned successfully");
     }
 
@@ -112,6 +146,19 @@ class ServiceBookingController extends Controller
         $data = $request->all();
         $servicebooking = ServiceBooking::findOrFail($id);
         $servicebooking->update($data);
+
+        $admin_user = User::where('id', $servicebooking->created_by)->first();
+
+        $project = [
+            'greeting' => 'Hi '.$admin_user->firstname.',',
+            'body' => 'Your booked service was completed',
+            'thanks' => 'Thanks for choosing Jatinga Garage and AutoSpares',
+            'actionText' => 'View Booking',
+            'actionURL' => url('edit-booking/'.$servicebooking->id),
+            'id' => 57
+        ];
+
+        $admin_user->notify(new EmailNotification($project));
 
         return redirect('admin/bookings')->with('message', "Booking closed successfully");
     }

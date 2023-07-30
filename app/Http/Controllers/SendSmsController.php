@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Country;
 use Twilio\Rest\Client;
 use Illuminate\Http\Request;
+use App\Notifications\EmailNotification;
 
 class SendSmsController extends Controller
 {
@@ -20,7 +22,7 @@ class SendSmsController extends Controller
         // Get the message from the request
         $message = $request->input('message');
 
-        
+
         $client = new Client($sid, $token);
 
         // Send the SMS
@@ -39,7 +41,7 @@ class SendSmsController extends Controller
     }
 
     public function saveCountry(Request $request){
-        
+
         $data = $request->all();
         foreach ($data as $obj) {
             $Country = new Country;
@@ -47,10 +49,29 @@ class SendSmsController extends Controller
             $Country->country_name = $obj['country_name'];
             $Country->iso_code = $obj['iso_code'];
             $Country->save();
-        }        
+        }
 
         return response()->json([
             'success' => true
         ]);
+    }
+
+    public function sendNotification()
+    {
+
+    	$user = User::first();
+
+        $project = [
+            'greeting' => 'Hi '.$user->name.',',
+            'body' => 'This is the project assigned to you.',
+            'thanks' => 'Thank you this is from codeanddeploy.com',
+            'actionText' => 'View Project',
+            'actionURL' => url('/'),
+            'id' => 57
+        ];
+
+        $user->notify(new EmailNotification($project));
+
+        dd('Notification sent!');
     }
 }

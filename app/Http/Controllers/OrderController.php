@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\OrderRequest;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
+use App\Notifications\EmailNotification;
 
 class OrderController extends Controller
 {
@@ -70,6 +71,20 @@ class OrderController extends Controller
             $product->quantity = ($product->quantity) - ($selected_product->quantity);
             $product->save();
         }
+
+
+        $admin_user = User::where('id', $order->user_id)->first();
+
+        $project = [
+            'greeting' => 'Hi '.$admin_user->firstname.',',
+            'body' => 'A new invoice <b>'.$order->order_number.'</b> was created for your service',
+            'thanks' => 'Thanks for choosing Jatinga Garage and AutoSpares',
+            'actionText' => 'View Invoice',
+            'actionURL' => url('invoices'),
+            'id' => 57
+        ];
+
+        $admin_user->notify(new EmailNotification($project));
 
         return redirect('admin/orders')->with('message', "Order created successfully");
     }
@@ -203,6 +218,19 @@ class OrderController extends Controller
             $order->order_status = 'Paid';
             $order->due = ($order->due) - ($order->paid);
             $order->save();
+
+            $admin_user = User::where('role_id', 1)->first();
+
+            $project = [
+                'greeting' => 'Hi '.$admin_user->firstname.',',
+                'body' => 'An order <b>'.$order->order_number.'</b> was paid',
+                'thanks' => '',
+                'actionText' => 'View Order',
+                'actionURL' => url('admin/bookings'),
+                'id' => 57
+            ];
+
+            $admin_user->notify(new EmailNotification($project));
 
             return redirect('invoices')->with('message', "Payment successful!");
 

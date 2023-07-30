@@ -22,6 +22,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/sendNotification', [App\Http\Controllers\SendSmsController::class, 'sendNotification']);
+
+
 Route::get('/getCustomerVehicles/{id}', [App\Http\Controllers\UserController::class, 'getCustomerVehicles']);
 Route::get('/getVehicle/{id}', [App\Http\Controllers\UserController::class, 'getVehicle']);
 Route::post('/sms', [SendSmsController::class, 'send']);
