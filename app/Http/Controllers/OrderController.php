@@ -90,7 +90,8 @@ class OrderController extends Controller
     }
 
     public function edit($id){
-        $order = Order::findOrFail($id);
+        $order = Order::join('users as u', 'orders.user_id', 'u.id')->where('orders.id', $id)->first();
+        // dd($order->lastname);
         return view('admin.order.edit', compact('order'));
     }
 
@@ -107,9 +108,10 @@ class OrderController extends Controller
     public function destroy($id)
     {
         $order = Order::findOrFail($id);
-        $order->delete();
+        $order->order_status = 'Closed';
+        $order->save();
 
-        return redirect('admin/orders')->with('message', "Order deleted successfully");
+        return redirect('admin/orders')->with('message', "Order closed successfully");
     }
 
     public function invoices(){

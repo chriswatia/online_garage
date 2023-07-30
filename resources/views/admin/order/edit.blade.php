@@ -1,12 +1,12 @@
 @extends('layouts.master')
 
-@section('title', 'Edit product')
+@section('title', 'View Order')
 
 @section('content')
     <div class="container-fluid px-4">
         <div class="card mt-4">
             <div class="card-header">
-                <h4 class="">Edit product</h4>
+                <h4 class="">View Order</h4>
             </div>
             <div class="card-body">
                 @if ($errors->any())
@@ -16,61 +16,156 @@
                         @endforeach
                     </div>
                 @endif
-                <form action="{{ url('admin/edit-product/'.$product->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ url('admin/orders') }}" method="GET" enctype="multipart/form-data">
                     @csrf
-                    @method('PUT')
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Name</label>
-                            <input type="text" name="name" value="{{ $product->name }}" id="" class="form-control" required>
+                            <label for="">Order Number</label>
+                            <input type="number" name="order_number" value="{{ $order->order_number }}" class="form-control" readonly>
                         </div>
                         <div class="col-md-6 mb-3">
-                            <label for="">Image</label>
-                            <input type="file" name="image" id="" class="form-control">
+                            <label for="">Order Date</label>
+                            <input type="date" name="order_date" value="{{ $order->order_date }}" class="form-control" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="">Customer Name</label>
+                            <input type="number" name="name" value="{{ $order->firstname }}" class="form-control" readonly>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="">Customer Phone No.</label>
+                            <input type="number" name="phone" value="{{ $order->phone }}" class="form-control" required>
                         </div>
                     </div>
 
                     <div class="row">
                         <div class="col-md-6 mb-3">
-                            <label for="">Brand</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="brand_id">
-                                {{-- <option selected>{{ $cell}}</option> --}}
-                                @foreach ($brands as $brand)
-                                <option {{ old('brand_id', $product->brand_id) ==  $brand->id ? 'selected' : ''}} value="{{ $brand->id }}">{{ $brand->name }}</option>
+                            <label for="">Mechanic Name</label>
+                            <input type="text" name="supervisor" value="{{ $order->supervisor }}" class="form-control" required>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="">Supervisor</label>
+                            <input type="text" name="supervisor" value="{{ $order->supervisor }}" class="form-control" required>
+                        </div>
+                    </div>
 
-                                @endforeach
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="">Customer Vehicle</label>
+                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="vehicle_type" id="customerVehicle" onchange="updateRegNo()">
                             </select>
                         </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="">Category</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-sm example" name="category_id">
-                                {{-- <option selected>{{ $cell}}</option> --}}
-                                @foreach ($categories as $category)
-                                <option {{ old('category_id', $product->category_id) ==  $category->id ? 'selected' : ''}} value="{{ $category->id }}">{{ $category->name }}</option>
+                        <div class="col-md-4 mb-3">
+                            <label for="">Vehicle Registration Number</label>
+                            <input type="text" name="registration_number" class="form-control" id="registration_number" readonly>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="card mt-4">
+                                <!-- Hidden input field to store the selected service IDs -->
+                                <input type="hidden" name="selected_services" id="selectedServices">
+                                <div class="card-header">
+                                    <h4 class="">Services Done
+                                    </h4>
+                                </div>
+                                <div class="card-body" id="servicesContainer">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Service</th>
+                                                <th>Price</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- The services rows will be dynamically added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="card mt-4">
+                                <div class="card-header">
+                                    <h4 class="">Products Used
+                                    </h4>
+                                </div>
+                                <div class="card-body" id="productsContainer">
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th>Product</th>
+                                                <th>Rate/Price</th>
+                                                <th>Available</th>
+                                                <th>Quantity</th>
+                                                <th>Total</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <!-- The services rows will be dynamically added here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h4 class="">Payment Amounts
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mt-1">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Sub Total</label>
+                                        <input type="number" name="sub_total" value="{{ $order->sub_total }}" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Total Amount</label>
+                                        <input type="number" name="total_amount" value="{{ $order->total_amount }}" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Discount</label>
+                                        <input type="number" name="discount" value="{{ $order->discount }}" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Grand Total</label>
+                                        <input type="number" name="grand_total" value="{{ $order->grand_total }}" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Paid Amount</label>
+                                        <input type="number" name="paid" value="{{ $order->paid }}" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Due Amount</label>
+                                        <input type="number" name="due" value="{{ $order->due }}" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Payment Type</label>
+                                        <input type="number" name="due" value="{{ $order->due }}" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Status</label>
+                                        <input type="number" name="due" value="{{ $order->order_status }}" class="form-control" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-                                @endforeach
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="">Quantity</label>
-                            <input type="number" name="quantity" value="{{ $product->quantity }}" class="form-control" required>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="">Rate(Kshs)</label>
-                            <input type="number" name="rate" value="{{ $product->rate }}" class="form-control" required>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label for="">Status</label>
-                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="status">
-                        <option value="1" @if (old($product->status) == "1") {{ "selected" }} @endif>Available</option>
-                        <option value="0" @if (old($product->status) == "0") {{ "selected" }} @endif>Not Available</option>
-                        </select>
-                    </div>
-                    <div class="row">
-                        <button type="submit" class="btn btn-primary">Update</button>
+                        <button type="submit" class="btn btn-primary">Back</button>
                     </div>
                 </form>
             </div>
