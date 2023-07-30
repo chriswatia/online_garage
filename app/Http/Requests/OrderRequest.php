@@ -42,7 +42,8 @@ class OrderRequest extends FormRequest
             'created_by' => 'nullable',
             'order_status' => 'nullable',
             'selected_services' => 'nullable',
-            'selected_products' => 'nullable'
+            'selected_products' => 'nullable',
+            'transaction_id' => 'nullable'
         ];
 
         return $rules;

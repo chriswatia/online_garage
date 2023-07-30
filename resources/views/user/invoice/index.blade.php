@@ -12,6 +12,8 @@
             <div class="card-body">
                 @if (session('message'))
                     <div class="alert alert-success">{{ session('message') }}</div>
+                    @elseif (session('error'))
+                    <div class="alert alert-danger">{{ session('error') }}</div>
                 @endif
                 <table class="table table-bordered">
                     <thead>
@@ -21,6 +23,8 @@
                             <th>Client Name</th>
                             <th>Contact</th>
                             <th>Total Amount(Kshs)</th>
+                            <th>Due</th>
+                            <th>Paid</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -34,6 +38,8 @@
                                  .App\Models\User::where('id', $order->user_id)->first()->lastname}}</td>
                                 <td>{{ App\Models\User::where('id', $order->user_id)->first()->phone }}</td>
                                 <td>{{ $order->grand_total }}</td>
+                                <td>{{ $order->due }}</td>
+                                <td>{{ $order->paid }}</td>
                                 @if ($order->order_status == "Pending")
                                 <td style="color:blue">Pending</td>
                                 @elseif ($order->order_status == "Paid")
@@ -42,10 +48,12 @@
                                 <td style="color:red">Closed</td>
                                 @endif
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="#">Pay</a>
+                                    @if ($order->order_status == 'Paid')
+                                    @else
+                                    <a class="btn btn-primary btn-sm" href="{{ url('stkpush/'.$order->id) }}">Pay</a>
+                                    @endif
 
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>

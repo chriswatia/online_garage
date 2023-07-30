@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\SendSmsController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,4 +36,5 @@ Route::get('/sendmail', function (Request $request) {
 });
 
 Route::get('/stkpush', [MpesaController::class, 'stkpush']);
-Route::get('/test', [MpesaController::class, 'test']);
+Route::get('/query', [MpesaController::class, 'query']);
+Route::get('/generateAuthCode', [MpesaController::class, 'generateAuthCode']);

@@ -82,7 +82,7 @@
                                 <input type="hidden" name="selected_services" id="selectedServices">
                                 <div class="card-header">
                                     <h4 class="">Services Done
-                                        <a href="#" onclick="addRow()" class="btn btn-primary btn-sm float-end">Add Service
+                                        <a onclick="addRow()" class="btn btn-primary btn-sm float-end">Add Service
                                             </a>
                                     </h4>
                                 </div>
@@ -108,7 +108,7 @@
                                 <input type="hidden" name="selected_products" id="selectedProducts">
                                 <div class="card-header">
                                     <h4 class="">Products Used
-                                        <a href="#" onclick="addProduct()" class="btn btn-primary btn-sm float-end">Add Product
+                                        <a onclick="addProduct()" class="btn btn-primary btn-sm float-end">Add Product
                                             </a>
                                     </h4>
                                 </div>
@@ -132,53 +132,66 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row mt-4">
-                        <div class="col-md-6 mb-3">
-                            <label for="">Sub Total</label>
-                            <input type="number" name="sub_total" value="0" class="form-control" readonly>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="">Total Amount</label>
-                            <input type="number" name="total_amount" value="0" class="form-control" readonly>
-                        </div>
-                    </div>
                     <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="">Discount</label>
-                            <input type="number" id="discountInput" name="discount" value="0" class="form-control" oninput="updateGrandTotalOnDiscountChange">
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="">Grand Total</label>
-                            <input type="number" name="grand_total" value="0" class="form-control" readonly>
+                        <div class="card mt-4">
+                            <div class="card-header">
+                                <h4 class="">Payment Amounts
+                                    <a onclick="calculateAmounts()" class="btn btn-primary btn-sm float-end">Calculate
+                                        </a>
+                                </h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row mt-1">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Sub Total</label>
+                                        <input type="number" name="sub_total" value="0" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Total Amount</label>
+                                        <input type="number" name="total_amount" value="0" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Discount</label>
+                                        <input type="number" id="discountInput" name="discount" value="0" class="form-control" oninput="updateGrandTotalOnDiscountChange">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Grand Total</label>
+                                        <input type="number" name="grand_total" value="0" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Paid Amount</label>
+                                        <input type="number" name="paid" value="0" class="form-control" readonly>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label for="">Due Amount</label>
+                                        <input type="number" name="due" value="0" class="form-control" readonly>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="mb-3">
+                                        <label for="">Payment Type</label>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="payment_type">
+                                            <option value="Cash">Cash</option>
+                                            <option value="M_PESA" selected>M-PESA</option>
+                                        </select>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="">Status</label>
+                                        <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="order_status">
+                                            <option value="Pending">Pending</option>
+                                            <option value="Paid">Paid</option>
+                                            <option value="Closed">Closed</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label for="">Paid Amount</label>
-                            <input type="number" name="paid" value="0" class="form-control" readonly>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label for="">Due Amount</label>
-                            <input type="number" name="due" value="0" class="form-control" readonly>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="mb-3">
-                            <label for="">Payment Type</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="payment_type">
-                                <option value="Cash">Cash</option>
-                                <option value="M_PESA" selected>M-PESA</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-                            <label for="">Status</label>
-                            <select class="form-select form-select-sm" aria-label=".form-select-lg example" required="required" name="order_status">
-                                <option value="Pending">Pending</option>
-                                <option value="Paid">Paid</option>
-                                <option value="Closed">Closed</option>
-                            </select>
-                        </div>
-                    </div>
+
 
                     <div class="row">
                         <button type="submit" class="btn btn-primary">Submit</button>
@@ -445,6 +458,50 @@
 
         productTotalAmountInput.value = totalAmount;
         updateGrandTotal();
+    }
+
+    // Function to calculate payment amounts
+    function calculateAmounts() {
+        const subTotalInput = document.querySelector('input[name="sub_total"]');
+        const totalAmountInput = document.querySelector('input[name="total_amount"]');
+        const discountInput = document.getElementById('discountInput');
+        const grandTotalInput = document.querySelector('input[name="grand_total"]');
+        const paidAmountInput = document.querySelector('input[name="paid"]');
+        const dueAmountInput = document.querySelector('input[name="due"]');
+
+        // Calculate the total price of services
+        const servicePriceInputs = document.querySelectorAll('input[name="service_price[]"]');
+        let servicesTotal = 0;
+        servicePriceInputs.forEach(input => {
+            const price = parseFloat(input.value) || 0;
+            servicesTotal += price;
+        });
+
+        // Calculate the total price of products
+        const productTotalAmountInputs = document.querySelectorAll('input[name="total_amount[]"]');
+        let productsTotal = 0;
+        productTotalAmountInputs.forEach(input => {
+            const price = parseFloat(input.value) || 0;
+            productsTotal += price;
+        });
+
+        // Calculate sub total and total amount
+        const subTotal = servicesTotal + productsTotal;
+        const discount = parseFloat(discountInput.value) || 0;
+        const totalAmount = servicesTotal + productsTotal;
+
+        // Update the sub total and total amount inputs
+        subTotalInput.value = subTotal.toFixed(2);
+        totalAmountInput.value = totalAmount.toFixed(2);
+
+        // Calculate grand total and due amount
+        const paidAmount = parseFloat(paidAmountInput.value) || 0;
+        const grandTotal = subTotal - discount;
+        const dueAmount = grandTotal - paidAmount;
+
+        // Update the grand total and due amount inputs
+        grandTotalInput.value = grandTotal.toFixed(2);
+        dueAmountInput.value = dueAmount.toFixed(2);
     }
 
 </script>

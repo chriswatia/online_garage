@@ -23,6 +23,8 @@
                             <th>Client Name</th>
                             <th>Contact</th>
                             <th>Total Amount(Kshs)</th>
+                            <th>Due</th>
+                            <th>Paid</th>
                             <th>Status</th>
                             <th>Action</th>
                         </tr>
@@ -36,6 +38,8 @@
                                     .App\Models\User::where('id', $order->user_id)->first()->lastname}}</td>
                                 <td>{{ App\Models\User::where('id', $order->user_id)->first()->phone }}</td>
                                 <td>{{ $order->grand_total }}</td>
+                                <td>{{ $order->due }}</td>
+                                <td>{{ $order->paid }}</td>
                                 @if ($order->order_status == "Pending")
                                 <td style="color:blue">Pending</td>
                                 @elseif ($order->order_status == "Paid")
@@ -44,8 +48,13 @@
                                 <td style="color:red">Closed</td>
                                 @endif
                                 <td>
-                                    {{-- <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-order/' . $order->id) }}">Edit</a> | --}}
-                                    <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-order/' . $order->id) }}">Close</a>
+
+                                    @if ($order->order_status == "Paid")
+                                        <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-order/' . $order->id) }}">Close</a>
+                                    @else
+                                    <a class="btn btn-primary btn-sm" href="#">View</a>
+                                    @endif
+
                                 </td>
                             </tr>
                         @endforeach

@@ -26,6 +26,7 @@ class Order extends Model
         'payment_type',
         'payment_status',
         'created_by',
-        'order_status'
+        'order_status',
+        'transaction_id'
     ];
 }

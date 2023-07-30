@@ -46,6 +46,11 @@ Route::middleware(['auth', 'verified'])->group(function (){
 
     //INVOICES ROUTES
     Route::get('invoices', [App\Http\Controllers\OrderController::class, 'invoices']);
+    Route::get('confirm/{order_id}', [App\Http\Controllers\OrderController::class, 'confirm']);
+
+    //MPESA ROUTES
+    Route::get('/stkpush/{order_id}', [App\Http\Controllers\OrderController::class, 'stkpush']);
+    Route::put('/query/{order_id}', [App\Http\Controllers\OrderController::class, 'query']);
 
     Route::post('/sms', [App\Http\Controllers\SendSmsController::class, 'send']);
 
