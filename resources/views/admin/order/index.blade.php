@@ -44,11 +44,9 @@
                                 <td style="color:red">Closed</td>
                                 @endif
                                 <td>
-                                    <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-order/' . $order->id) }}">Edit</a> |
-                                    <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-order/' . $order->id) }}">Delete</a>
-
+                                    {{-- <a class="btn btn-primary btn-sm" href="{{ url('admin/edit-order/' . $order->id) }}">Edit</a> | --}}
+                                    <a class="btn btn-danger btn-sm" href="{{ url('admin/delete-order/' . $order->id) }}">Close</a>
                                 </td>
-
                             </tr>
                         @endforeach
                     </tbody>

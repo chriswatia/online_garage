@@ -249,7 +249,7 @@
                 <input type="number" class="form-control" placeholder="Available" name="product_available_quantity[]" readonly id="productQuantity-${rowId}">
             </div>
             <div class="col-md-2 mt-2">
-                <input type="number" class="form-control" value="1" placeholder="Quantity" name="product_request_quantity[]" place id="productRequestQuantity-${rowId}" oninput="updateProductTotalAmount(${rowId})">
+                <input type="number" class="form-control" placeholder="Quantity" name="product_request_quantity[]" place id="productRequestQuantity-${rowId}" oninput="updateProductTotalAmount(${rowId})">
             </div>
             <div class="col-md-2 mt-2">
                 <input type="number" class="form-control" placeholder="Total Amount" name="total_amount[]" readonly place id="productTotalAmount-${rowId}">
@@ -405,36 +405,34 @@
         productPriceInput.value = selectedProductPrice;
         productQuantityInput.value = selectedProductQuantity;
         productTotalAmountInput.value = selectedProductPrice * requestedQuantity;
-        updateGrandTotal();
     }
 
     // Function to update the hidden input field with selected service IDs
     function updateSelectedProducts() {
-        const productSelects = document.querySelectorAll('select[name="service_id[]"]');
-        const productPrices = document.querySelectorAll('input[name="service_price[]"]');
+        const productSelects = document.querySelectorAll('select[name="product_id[]"]');
+        const productQuantities = document.querySelectorAll('input[name="product_request_quantity[]"]');
         const selectedProducts = [];
 
         for (let i = 0; i < productSelects.length; i++) {
             const select = productSelects[i];
-            const priceInput = productPrices[i];
+            const quantityInput = productQuantities[i];
             const productId = select.value;
-            const productPrice = priceInput.value;
+            const quantity = quantityInput.value;
 
-            if (productPrice !== '') {
-                selectedProducts.push(productId);
+            if (quantity !== '' && quantity > 0) {
+                selectedProducts.push({ id: productId, quantity: quantity });
             }
         }
 
         const hiddenInput = document.getElementById('selectedProducts');
-        hiddenInput.value = selectedProducts.join(',');
+        hiddenInput.value = JSON.stringify(selectedProducts);
     }
 
-    // Attach the updateSelectedProducts function to the onchange event of service selects
+    // Attach the updateSelectedProducts function to the onchange event of product selects
     const productSelects = document.querySelectorAll('select[name="product_id[]"]');
     productSelects.forEach(select => {
         select.addEventListener('change', updateSelectedProducts);
     });
-
 
     function updateProductTotalAmount(rowId) {
         const productRequestQuantityInput = document.querySelector(`#row-${rowId} input[name="product_request_quantity[]"]`);
@@ -449,54 +447,5 @@
         updateGrandTotal();
     }
 
-    // Function to update the grand total when any product total amount changes
-    function updateGrandTotal() {
-        const productTotalAmountInputs = document.querySelectorAll('input[name="total_amount[]"]');
-        let grandTotal = 0;
-
-        productTotalAmountInputs.forEach(input => {
-            const totalAmount = parseFloat(input.value);
-            if (!isNaN(totalAmount)) {
-                grandTotal += totalAmount;
-            }
-        });
-
-        // Get the discount value
-        const discountInput = document.querySelector('input[name="discount"]');
-        const discount = parseFloat(discountInput.value) || 0;
-
-        // Calculate the final grand total after applying the discount
-        const finalGrandTotal = grandTotal - discount;
-
-        // Update the grand total input field
-        const grandTotalInput = document.querySelector('input[name="grand_total"]');
-        grandTotalInput.value = finalGrandTotal;
-
-        // Update the paid and due amounts based on the grand total
-        const paidInput = document.querySelector('input[name="paid"]');
-        const dueInput = document.querySelector('input[name="due"]');
-        const totalAmountInput = document.querySelector('input[name="total_amount"]');
-        const totalAmount = parseFloat(totalAmountInput.value);
-
-        // If the paid amount is more than the total amount, adjust it to the total amount
-        const paidAmount = parseFloat(paidInput.value);
-        const newDueAmount = totalAmount - (paidAmount > totalAmount ? totalAmount : paidAmount);
-
-        // Update the due amount
-        dueInput.value = newDueAmount;
-    }
-
-    // Function to update the grand total when the discount changes
-    function updateGrandTotalOnDiscountChange() {
-        const discountInput = document.getElementById('discountInput');
-        updateGrandTotal();
-    }
-
-    // Attach the updateGrandTotalOnDiscountChange function to the onchange event of the discount input
-
-    //discountInput.addEventListener('input', updateGrandTotalOnDiscountChange);
-
-    // Call updateGrandTotal initially to calculate the grand total with the initial discount value
-    //updateGrandTotal();
 </script>
 

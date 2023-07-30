@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\MpesaController;
 use App\Http\Controllers\SendSmsController;
 
 /*
@@ -32,3 +33,6 @@ Route::get('/sendmail', function (Request $request) {
         $message->to('chriswatia@gmail.com', 'chriswatia1@gmail.com');
     });
 });
+
+Route::get('/stkpush', [MpesaController::class, 'stkpush']);
+Route::get('/test', [MpesaController::class, 'test']);

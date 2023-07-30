@@ -37,6 +37,7 @@ class OrderController extends Controller
     {
         $data = $request->validated();
 
+
         $order = new Order;
         $data['created_by'] = Auth::user()->id;
         $order = $order->create($data);
@@ -50,6 +51,23 @@ class OrderController extends Controller
             $service_item->rate = $service->rate;
             $service_item->created_by = Auth::user()->id;
             $service_item->save();
+        }
+
+        $selected_products = json_decode($data['selected_products']);
+        foreach($selected_products as $selected_product){
+            $product = Product::findOrFail($selected_product->id);
+
+            $order_item = new OrderItem();
+            $order_item->order_id = $order->id;
+            $order_item->product_id = $product->id;
+            $order_item->quantity = $selected_product->quantity;
+            $order_item->rate = $product->rate;
+            $order_item->total = ($product->rate)*($selected_product->quantity);
+            $order_item->created_by = Auth::user()->id;
+            $order_item->save();
+
+            $product->quantity = ($product->quantity) - ($selected_product->quantity);
+            $product->save();
         }
 
         return redirect('admin/orders')->with('message', "Order created successfully");
