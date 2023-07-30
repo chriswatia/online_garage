@@ -77,7 +77,7 @@ class OrderController extends Controller
 
         $project = [
             'greeting' => 'Hi '.$admin_user->firstname.',',
-            'body' => 'A new invoice <b>'.$order->order_number.'</b> was created for your service',
+            'body' => 'A new invoice '.$order->order_number.' was created for your service',
             'thanks' => 'Thanks for choosing Jatinga Garage and AutoSpares',
             'actionText' => 'View Invoice',
             'actionURL' => url('invoices'),
@@ -223,7 +223,7 @@ class OrderController extends Controller
 
             $project = [
                 'greeting' => 'Hi '.$admin_user->firstname.',',
-                'body' => 'An order <b>'.$order->order_number.'</b> was paid',
+                'body' => 'An order '.$order->order_number.' was paid',
                 'thanks' => '',
                 'actionText' => 'View Order',
                 'actionURL' => url('admin/bookings'),

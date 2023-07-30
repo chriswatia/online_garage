@@ -121,15 +121,15 @@ class ServiceBookingController extends Controller
         $servicebooking = ServiceBooking::findOrFail($id);
         $servicebooking->update($data);
 
-        $servicebooking = ServiceBooking::findOrFail($id);
+        $servicebooking = ServiceBooking::findOrFail($servicebooking->id);
 
-        $user = User::where('id', $servicebooking->mechannic_id)->first();
+        $user = User::where('id', $servicebooking->mechanic_id)->first();
 
         $admin_user = User::where('id', $servicebooking->created_by)->first();
 
         $project = [
             'greeting' => 'Hi '.$admin_user->firstname.',',
-            'body' => ''.$user->firstname .' '.$user->lastname.' was assigned the Mechanic',
+            'body' => ''.$user->firstname .' '.$user->lastname.' was assigned as the Mechanic',
             'thanks' => 'Thanks for choosing Jatinga Garage and AutoSpares',
             'actionText' => 'View Booking',
             'actionURL' => url('edit-booking/'.$servicebooking->id),
@@ -154,7 +154,7 @@ class ServiceBookingController extends Controller
             'body' => 'Your booked service was completed',
             'thanks' => 'Thanks for choosing Jatinga Garage and AutoSpares',
             'actionText' => 'View Booking',
-            'actionURL' => url('edit-booking/'.$servicebooking->id),
+            'actionURL' => url('bookings'),
             'id' => 57
         ];
 
